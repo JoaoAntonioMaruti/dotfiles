@@ -82,9 +82,13 @@ endfunc
 nmap <silent> <C-b> :call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-    exe ":NERDTreeClose"
+    exe ":NERDTreeFocus"
   else
-    exe ":NERDTreeFind"
+    if @% == ""
+      exe ":NERDTreeToggle"
+    else
+      exe ":NERDTreeFind"
+    endif ""
   endif
 endfunction
 
@@ -214,6 +218,10 @@ call plug#begin('~/.vim/plugged')
   " Code speel
   Plug 'iamcco/coc-spell-checker'
 
+  " Code scopes
+  Plug 'wordijp/vim-vimscript-scope-syntax'
+  Plug 'radgeRayden/vim-scopes'
+
   " Ack needed install Ack on Mac via brew
   Plug 'mileszs/ack.vim'
 
@@ -249,6 +257,8 @@ call plug#end()
 " COC
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gs :sp<CR><Plug>(coc-definition)
+nmap <silent> gv :vsp<CR><Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
@@ -330,4 +340,19 @@ colorscheme ayu
 let g:blamer_enabled = 1
 let g:blamer_delay = 500
 highlight Blamer guifg=#000000
+
+" Async, await
+highlight Keyword cterm=italic ctermfg=120
+
+" Loops
+highlight Repeat cterm=italic
+
+" Import, export
+highlight Special cterm=italic
+
+" True, false
+highlight Boolean cterm=italic
+
+" let, var, const
+highlight StorageClass cterm=italic
 
