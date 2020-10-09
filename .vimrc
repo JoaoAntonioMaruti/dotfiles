@@ -207,6 +207,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-eunuch'
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
   Plug 'vim-test/vim-test'
+  Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+  Plug 'etdev/vim-hexcolor'
+  Plug 'APZelos/blamer.nvim'
+
+  " Code speel
+  Plug 'iamcco/coc-spell-checker'
+
+  " Ack needed install Ack on Mac via brew
+  Plug 'mileszs/ack.vim'
 
   Plug 'airblade/vim-gitgutter'
 
@@ -316,3 +325,9 @@ inoremap <silent><expr> <Tab> coc#refresh()
 set termguicolors     " enable true colors support
 let ayucolor="mirage" " for mirage version of theme
 colorscheme ayu
+
+" git blamer
+let g:blamer_enabled = 1
+let g:blamer_delay = 500
+highlight Blamer guifg=#000000
+
