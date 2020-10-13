@@ -78,6 +78,6 @@
 
 ## Fonts
 
-Verify your term support font ligatures
+Check your term support fonts ligatures
 
 [https://github.com/kencrocken/FiraCodeiScript](https://github.com/kencrocken/FiraCodeiScript)
