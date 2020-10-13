@@ -64,6 +64,7 @@
 ## Features
 
 - TypeScript support
+- Vim Plug
 - React
 - styled-components
 - GraphQL
