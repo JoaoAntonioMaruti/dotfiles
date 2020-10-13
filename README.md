@@ -36,19 +36,22 @@
 `<leader> + p`
 ![Prettier](images/prettier.gif)
 
-#### Go definition (COC)
+#### Go definition with COC
 
 `gd`
+
 ![Go definition](images/gd.gif)
 
-#### Go definition (COC)
+#### Split vertical panel and go definition
 
 `gv`
+
 ![split vertical and go definition](images/gssv.gif)
 
-#### Go definition (COC)
+##### Split panel and go definition
 
 `gs`
+
 ![Go horizontal and go definition](images/gdsp.gif)
 
 <!--![Screenshot](images/screenshot.png)-->
@@ -67,6 +70,7 @@
 - Vim Plug
 - React
 - styled-components
+- Elixir
 - GraphQL
 - Code navigation
 - Font ligatures
