@@ -128,6 +128,7 @@ set shortmess=atI
 set title
 
 " FZF
+let g:fzf_layout = { 'down': '40%' }
 let g:fzf_colors =
       \ { 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
@@ -215,6 +216,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'etdev/vim-hexcolor'
   Plug 'APZelos/blamer.nvim'
 
+  Plug 'itchyny/lightline.vim'
+
   " Code speel
   Plug 'iamcco/coc-spell-checker'
 
@@ -253,6 +256,11 @@ call plug#begin('~/.vim/plugged')
   " Vim theme color
   Plug 'ayu-theme/ayu-vim'
 call plug#end()
+
+" Lightline color schema
+let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ }
 
 " COC
 " GoTo code navigation.
