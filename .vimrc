@@ -351,7 +351,7 @@ highlight Repeat cterm=italic
 highlight Special cterm=italic
 
 " True, false
-highlight Boolean cterm=italic
+highlight Boolean cterm=italic ctermfg=201
 
 " let, var, const
 highlight StorageClass cterm=italic
