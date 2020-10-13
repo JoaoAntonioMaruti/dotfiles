@@ -1,10 +1,12 @@
-# João's dotfiles
+# João's dotfiles 👨‍💻
 
 ## Screenshots
 
 ![Screenshot](images/screenshot.png)
 
-## Hacks 👨‍💻
+## install
+
+## Hacks
 
 #### Open NerdTree
 
@@ -16,7 +18,38 @@
 
 `Ctrl + p`
 
-![Screenshot](images/open-file.gif)
+![Open File](images/open-file.gif)
+
+#### Split panels navigation
+
+`ctrl + [h, j, k, l]` (like a vim navigation)
+
+![Panel navigate](images/tabnavigation.gif)
+
+#### NerdComments
+
+`<leader> + space + c`
+![Comment](images/comment.gif)
+
+#### Run prettier
+
+`<leader> + p`
+![Prettier](images/prettier.gif)
+
+#### Go definition (COC)
+
+`gd`
+![Go definition](images/gd.gif)
+
+#### Go definition (COC)
+
+`gv`
+![split vertical and go definition](images/gssv.gif)
+
+#### Go definition (COC)
+
+`gs`
+![Go horizontal and go definition](images/gdsp.gif)
 
 <!--![Screenshot](images/screenshot.png)-->
 
@@ -28,10 +61,17 @@
 
 <!--![Screenshot](images/screenshot.png)-->
 
-<!--![Screenshot](images/screenshot.png)-->
+## Features
 
-<!--![Screenshot](images/screenshot.png)-->
+- TypeScript support
+- React
+- styled-components
+- GraphQL
+- Code navigation
+- Font ligatures
 
-<!--![Screenshot](images/screenshot.png)-->
+## Fonts
 
-<!--![Screenshot](images/screenshot.png)-->
+Verify your term support font ligatures
+
+[https://github.com/kencrocken/FiraCodeiScript](https://github.com/kencrocken/FiraCodeiScript)
