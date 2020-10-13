@@ -47,13 +47,13 @@
 
 `gv`
 
-![split vertical and go definition](images/gssv.gif)
+![split new vertical panel and go definition](images/gssv.gif)
 
 ##### Split panel and go definition
 
 `gs`
 
-![Go horizontal and go definition](images/gdsp.gif)
+![Split new panel and go definition](images/gdsp.gif)
 
 <!--![Screenshot](images/screenshot.png)-->
 
