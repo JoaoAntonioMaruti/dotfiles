@@ -34,6 +34,7 @@
 #### Run prettier
 
 `<leader> + p`
+
 ![Prettier](images/prettier.gif)
 
 #### Go definition with COC
