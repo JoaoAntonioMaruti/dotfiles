@@ -1,10 +1,10 @@
 # João's dotfiles
 
-### Screenshots
+## Screenshots
 
 ![Screenshot](images/screenshot.png)
 
-### Hack yourself
+## Hacks 👨‍💻
 
 #### Open NerdTree
 
