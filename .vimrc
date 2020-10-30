@@ -25,6 +25,7 @@ set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 setl nu
+set clipboard=
 
 autocmd BufWritePre * %s/\s\+$//e
 
@@ -92,6 +93,9 @@ function! NERDTreeToggleInCurDir()
   endif
 endfunction
 
+" NerdTree show dotfiles config
+let NERDTreeShowHidden=1
+
 " ================ Turn Off Swap Files ==============
 set noswapfile
 set nobackup
@@ -150,6 +154,11 @@ nnoremap tk :tabfirst<CR>
 nnoremap tl :tabnext<CR>
 nnoremap th :tabprev<CR>
 nnoremap tj :tablast<CR>
+
+" Copy clipboard commands
+vmap <C-x> :!pbcopy<CR>
+vmap <C-c> :w !pbcopy<CR><CR>
+vmap <C-v> :!pbpaste<CR>
 
 set autoindent
 set smartindent
@@ -284,7 +293,7 @@ set background=dark
 colorscheme hybrid
 
 " FZF
-nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :GFiles<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 
@@ -362,5 +371,5 @@ highlight Special cterm=italic
 highlight Boolean cterm=italic ctermfg=201
 
 " let, var, const
-highlight StorageClass cterm=italic
+highlight StorageClass cterm=italic ctermfg=120
 
