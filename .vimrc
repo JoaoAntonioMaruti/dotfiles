@@ -223,7 +223,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'vim-test/vim-test'
   Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
   Plug 'etdev/vim-hexcolor'
-  Plug 'APZelos/blamer.nvim'
+
+  " Remove blamer becase visual bugs
+  "Plug 'APZelos/blamer.nvim'
+
+  Plug 'severin-lemaignan/vim-minimap'
 
   Plug 'itchyny/lightline.vim'
 
@@ -270,6 +274,17 @@ call plug#end()
 let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ }
+
+" Nerd Commenter jsx files
+let g:NERDCustomDelimiters={
+	\ 'javascript': { 'left': '//', 'right': '', 'leftAlt': '{/*', 'rightAlt': '*/}' },
+\}
+
+" Vim minimap config
+let g:minimap_show='<leader>ms'
+let g:minimap_update='<leader>mu'
+let g:minimap_close='<leader>gc'
+let g:minimap_toggle='<leader>gt'
 
 " COC
 " GoTo code navigation.
@@ -354,9 +369,9 @@ let ayucolor="mirage" " for mirage version of theme
 colorscheme ayu
 
 " git blamer
-let g:blamer_enabled = 1
-let g:blamer_delay = 500
-highlight Blamer guifg=#000000
+"let g:blamer_enabled = 1
+"let g:blamer_delay = 500
+"highlight Blamer guifg=#000000
 
 " Async, await
 highlight Keyword cterm=italic ctermfg=120
