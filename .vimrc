@@ -149,6 +149,10 @@ let g:fzf_colors =
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
+" Ack config
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+
 " Tab navigation
 nnoremap tk :tabfirst<CR>
 nnoremap tl :tabnext<CR>
@@ -285,6 +289,7 @@ let g:minimap_show='<leader>ms'
 let g:minimap_update='<leader>mu'
 let g:minimap_close='<leader>gc'
 let g:minimap_toggle='<leader>gt'
+let g:minimap_highlight='Visual'
 
 " COC
 " GoTo code navigation.
