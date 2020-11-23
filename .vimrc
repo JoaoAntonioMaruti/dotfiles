@@ -96,6 +96,9 @@ endfunction
 " NerdTree show dotfiles config
 let NERDTreeShowHidden=1
 
+" NerdTree git statuses icons
+let g:NERDTreeGitStatusUseNerdFonts = 1
+
 " ================ Turn Off Swap Files ==============
 set noswapfile
 set nobackup
@@ -269,6 +272,10 @@ call plug#begin('~/.vim/plugged')
 
   " NerdTree fonts
   Plug 'ryanoasis/vim-devicons'
+
+  " NerdTree Git icons
+  Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin'
 
   " Vim theme color
   Plug 'ayu-theme/ayu-vim'
