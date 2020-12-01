@@ -169,7 +169,7 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 
 " Ack config
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :vnew<CR> :Ack!<Space>
+nnoremap <Leader>a :vsp<CR> :Ack!<Space>
 
 " Tab navigation
 nnoremap tn :tabnew<CR>
