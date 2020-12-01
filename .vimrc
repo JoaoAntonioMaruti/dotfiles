@@ -96,6 +96,9 @@ endfunction
 " NerdTree show dotfiles config
 let NERDTreeShowHidden=1
 
+" NerdTree show line numbers
+let NERDTreeShowLineNumbers=1
+
 " NerdTree git statuses icons
 let g:NERDTreeGitStatusUseNerdFonts = 1
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -105,7 +108,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Renamed'   :'🔜',
                 \ 'Unmerged'  :'🐣',
                 \ 'Deleted'   :'❌',
-                \ 'Dirty'     :'🗑',
+                \ 'Dirty'     :'🤓',
                 \ 'Ignored'   :'☒',
                 \ 'Clean'     :'✅',
                 \ 'Unknown'   :'❓',
@@ -166,9 +169,10 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 
 " Ack config
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>a :vnew<CR> :Ack!<Space>
 
 " Tab navigation
+nnoremap tn :tabnew<CR>
 nnoremap tk :tabfirst<CR>
 nnoremap tl :tabnext<CR>
 nnoremap th :tabprev<CR>
