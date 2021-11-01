@@ -27,6 +27,12 @@ set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 setl nu
 set clipboard=
 
+" Copy and paste clipboard
+nnoremap <C-y> "+y
+vnoremap <C-y> "+y
+nnoremap <C-p> "+gP
+vnoremap <C-p> "+gP
+
 autocmd BufWritePre * %s/\s\+$//e
 
 " Disable mouse scroll wheel
@@ -65,22 +71,8 @@ if executable('rg')
   nnoremap \ :Rg <C-R><space>
 endif
 
-" set relativenumber
-autocmd FocusLost   * call NumberToggle()
-autocmd FocusGained * call NumberToggle()
-autocmd InsertEnter * call NumberToggle()
-autocmd InsertLeave * call NumberToggle()
-
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set number
-  else
-    set relativenumber
-  endif
-endfunc
-
 " nerd tree
-nmap <silent> <C-b> :call NERDTreeToggleInCurDir()<cr>
+nmap <silent> <C-a> :call NERDTreeToggleInCurDir()<cr>
 function! NERDTreeToggleInCurDir()
   if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
     exe ":NERDTreeFocus"
@@ -109,7 +101,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Unmerged'  :'🐣',
                 \ 'Deleted'   :'❌',
                 \ 'Dirty'     :'🤓',
-                \ 'Ignored'   :'☒',
+                \ 'Ignored'   :'🙋',
                 \ 'Clean'     :'✅',
                 \ 'Unknown'   :'❓',
                 \ }
@@ -142,6 +134,8 @@ set laststatus=2
 set modelines=4
 " Disable error bells
 set noerrorbells
+
+set cmdheight=2
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
 " Don’t show the intro message when starting Vim
@@ -261,6 +255,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'wordijp/vim-vimscript-scope-syntax'
   Plug 'radgeRayden/vim-scopes'
 
+  " Vim svelte
+  Plug 'evanleck/vim-svelte'
+
   " Ack needed install Ack on Mac via brew
   Plug 'mileszs/ack.vim'
 
@@ -268,6 +265,16 @@ call plug#begin('~/.vim/plugged')
 
   " post install (yarn install | npm install) then load plugin only for editing supported files
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
+  " Flutter
+  Plug 'dart-lang/dart-vim-plugin'
+  Plug 'natebosch/vim-lsc'
+  Plug 'natebosch/vim-lsc-dart'
+
+" Flutter
+  Plug 'thosakwe/vim-flutter'
+  " Vim commands for Flutter, including hot-reload-on-save and more.
+  Plug 'natebosch/vim-lsc-dart'
 
   " FrontEnd
   Plug 'pangloss/vim-javascript'    " JavaScript support
@@ -278,6 +285,10 @@ call plug#begin('~/.vim/plugged')
   "Plug 'dense-analysis/ale'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
+
+  " Rust
+  Plug 'rust-lang/rust.vim'
+  Plug 'neoclide/coc-rls'
 
   " Elixir
   Plug 'elixir-editors/vim-elixir' " Syntax highlighting, Filetype detection, Automatic indentation
@@ -333,7 +344,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 let g:hybrid_custom_term_colors = 0
 let g:hybrid_reduced_contrast = 0
 set background=dark
-colorscheme hybrid
+"colorscheme hybrid
 
 " FZF
 nnoremap <C-p> :GFiles<CR>
@@ -395,6 +406,8 @@ inoremap <silent><expr> <Tab> coc#refresh()
 set termguicolors     " enable true colors support
 let ayucolor="mirage" " for mirage version of theme
 colorscheme ayu
+hi Normal guibg=NONE ctermbg=NONE
+set noerrorbells visualbell t_vb=
 
 " git blamer
 "let g:blamer_enabled = 1
@@ -415,4 +428,16 @@ highlight Boolean cterm=italic ctermfg=201
 
 " let, var, const
 highlight StorageClass cterm=italic ctermfg=120
+
+" Vim Flutter Configurations
+let g:lsc_auto_map = v:true
+nnoremap <leader>df :DartFmt<cr>
+nnoremap <leader>flr :FlutterRun<cr>
+nnoremap <leader>flq :FlutterQuit<cr>
+nnoremap <leader>flh :FlutterHotReload<cr>
+nnoremap <leader>flhr :FlutterHotRestart<cr>
+nnoremap <leader>fld :FlutterVisualDebug<cr>
+nnoremap <leader>flem :FlutterEmulators<cr>
+nnoremap <leader>fldv :FlutterDevices<cr>
+
 
