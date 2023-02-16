@@ -10,7 +10,7 @@
 
 #### Open NerdTree
 
-`Ctrl + b`
+`Ctrl + a`
 
 ![Open NerdTree](images/open-nerdtree.gif)
 
