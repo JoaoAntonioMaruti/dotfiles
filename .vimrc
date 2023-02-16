@@ -21,12 +21,14 @@ set mouse-=a                    "Disable mouse click
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 set cursorline                  " Set line on cursor
+"set cursorcolumn                " Set column on cursor
+
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 setl nu
-set clipboard=
-
+set clipboard=unnamed
+set nomodeline
 " Copy and paste clipboard
 nnoremap <C-y> "+y
 vnoremap <C-y> "+y
@@ -85,13 +87,15 @@ function! NERDTreeToggleInCurDir()
   endif
 endfunction
 
-" NerdTree show dotfiles config
+let g:multi_cursor_quit_key = '<C-m>'
+
+"NerdTree show dotfiles config
 let NERDTreeShowHidden=1
 
-" NerdTree show line numbers
+"NerdTree show line numbers
 let NERDTreeShowLineNumbers=1
 
-" NerdTree git statuses icons
+"NerdTree git statuses icons
 let g:NERDTreeGitStatusUseNerdFonts = 1
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'🦄',
@@ -171,6 +175,16 @@ nnoremap tk :tabfirst<CR>
 nnoremap tl :tabnext<CR>
 nnoremap th :tabprev<CR>
 nnoremap tj :tablast<CR>
+noremap <leader>1 1gt
+noremap <leader>2 2gt
+noremap <leader>3 3gt
+noremap <leader>4 4gt
+noremap <leader>5 5gt
+noremap <leader>6 6gt
+noremap <leader>7 7gt
+noremap <leader>8 8gt
+noremap <leader>9 9gt
+noremap <leader>0 :tablast<cr>
 
 " Copy clipboard commands
 vmap <C-x> :!pbcopy<CR>
@@ -199,6 +213,10 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+"imap <silent> <C-j> <Plug>(copilot-next)
+"imap <silent> <C-k> <Plug>(copilot-previous)
+"imap <silent> <C-\> <Plug>(copilot-dismiss)
 
 " Display tabs and trailing spaces visually
 set list
@@ -236,13 +254,18 @@ call plug#begin('~/.vim/plugged')
   Plug 'scrooloose/nerdcommenter'
   Plug 'preservim/nerdtree'
   Plug 'tpope/vim-eunuch'
+  "Plug 'vim-nerdtree-syntax-highlight'
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
   Plug 'vim-test/vim-test'
   Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
   Plug 'etdev/vim-hexcolor'
 
+  Plug 'fabi1cazenave/termopen.vim'
+
+  Plug 'kassio/neoterm'
   " Remove blamer becase visual bugs
   "Plug 'APZelos/blamer.nvim'
+  Plug 'zivyangll/git-blame.vim'
 
   Plug 'severin-lemaignan/vim-minimap'
 
@@ -251,9 +274,15 @@ call plug#begin('~/.vim/plugged')
   " Code speel
   Plug 'iamcco/coc-spell-checker'
 
+  Plug 'terryma/vim-multiple-cursors'
+
+  " AI
+  Plug 'github/copilot.vim'
+
   " Code scopes
   Plug 'wordijp/vim-vimscript-scope-syntax'
   Plug 'radgeRayden/vim-scopes'
+  Plug 'nathanaelkane/vim-indent-guides'
 
   " Vim svelte
   Plug 'evanleck/vim-svelte'
@@ -318,6 +347,13 @@ let g:NERDCustomDelimiters={
 	\ 'javascript': { 'left': '//', 'right': '', 'leftAlt': '{/*', 'rightAlt': '*/}' },
 \}
 
+
+" Rainbow tabs
+"let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_auto_colors = 0
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#170428   ctermbg=3
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#200a34 ctermbg=4
+
 " Vim minimap config
 let g:minimap_show='<leader>ms'
 let g:minimap_update='<leader>mu'
@@ -351,9 +387,15 @@ nnoremap <C-p> :GFiles<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 
-" Tags
-nnoremap <Leader>t :BTags<CR>
-nnoremap <Leader>T :Tags<CR>
+let test#strategy = "neovim"
+let g:test#neovim#term_position = 'vert'
+
+" vim-tests bindings
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
 
 " fugitive git bindings
 nnoremap <space>gb :Gblame<CR><CR>
@@ -406,6 +448,8 @@ inoremap <silent><expr> <Tab> coc#refresh()
 set termguicolors     " enable true colors support
 let ayucolor="mirage" " for mirage version of theme
 colorscheme ayu
+"colorscheme dracula
+"colorscheme nightfly
 hi Normal guibg=NONE ctermbg=NONE
 set noerrorbells visualbell t_vb=
 
@@ -415,19 +459,30 @@ set noerrorbells visualbell t_vb=
 "highlight Blamer guifg=#000000
 
 " Async, await
-highlight Keyword cterm=italic ctermfg=120
+"highlight Keyword cterm=italic ctermfg=120
 
 " Loops
-highlight Repeat cterm=italic
+"highlight Repeat cterm=italic
 
 " Import, export
-highlight Special cterm=italic
+"highlight Special cterm=italic
 
 " True, false
-highlight Boolean cterm=italic ctermfg=201
+"highlight Boolean cterm=italic ctermfg=201
 
 " let, var, const
-highlight StorageClass cterm=italic ctermfg=120
+"highlight StorageClass cterm=italic ctermfg=120
+
+
+"highlight CursorColumn
+"cterm=underline
+"term=underline ctermbg=236 guibg=Grey40
+
+"highlight CursorLine cterm=underline
+"hi CursorLine cterm=NONE ctermbg=242
+
+"highlight CursorLine   cterm=underline ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+"highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 " Vim Flutter Configurations
 let g:lsc_auto_map = v:true
@@ -440,4 +495,12 @@ nnoremap <leader>fld :FlutterVisualDebug<cr>
 nnoremap <leader>flem :FlutterEmulators<cr>
 nnoremap <leader>fldv :FlutterDevices<cr>
 
+nnoremap <Leader>q" ciw""<Esc>P
+nnoremap <Leader>q' ciw''<Esc>P
+nnoremap <Leader>qd daW"=substitute(@@,"'\\\|\"","","g")<CR>P
+
+nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
+
+"set foldmethod=indent
+"set foldlevelstart=1
 
