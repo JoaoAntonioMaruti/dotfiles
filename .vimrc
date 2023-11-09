@@ -5,35 +5,56 @@ syntax enable
 
 filetype on
 filetype plugin indent on
+set linespace=10
 
 let mapleader=','
 
+hi Visual  guifg=#000000 guibg=#FFFFFF gui=none
+
 " ================ General Config ====================
 
-scriptencoding utf-8          " utf-8 all the way
+scriptencoding utf-8            "utf-8 all the way
 set encoding=utf-8
-set number               "Line numbers are good
+set number                      "Line numbers are good
 set splitbelow
 set splitright
 set backspace=indent,eol,start  "Allow backspace in insert mode
 set history=1000                "Store lots of :cmdline history
-set mouse-=a                    "Disable mouse click
+set mouse=a                     "Disable mouse click
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
-set cursorline                  " Set line on cursor
-"set cursorcolumn                " Set column on cursor
-
+set cursorline                  "Set line on cursor
+set cursorcolumn                "Set column on cursor
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set guifont=Inconsolata\ XL:h14,Inconsolata:h15,Monaco:17,Monospace
 setl nu
 set clipboard=unnamed
 set nomodeline
+
+"disable macro recording
+map q <Nop>
+
 " Copy and paste clipboard
 nnoremap <C-y> "+y
 vnoremap <C-y> "+y
 nnoremap <C-p> "+gP
 vnoremap <C-p> "+gP
+
+"" Disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
+" better tabbing
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap <ALT-j> :resize -2<CR>
+nnoremap <ALT-k> :resize +2<CR>
+nnoremap <ALT-h> :vertical resize -2<CR>
+nnoremap <ALT-l> :vertical resize +2<CR>
 
 autocmd BufWritePre * %s/\s\+$//e
 
@@ -88,14 +109,17 @@ function! NERDTreeToggleInCurDir()
 endfunction
 
 let g:multi_cursor_quit_key = '<C-m>'
-
-"NerdTree show dotfiles config
+let g:NERDTreeQuitOnOpen = 1
+ "NerdTree show dotfiles config
 let NERDTreeShowHidden=1
+let g:NERDTreeWinPos = "right"
 
-"NerdTree show line numbers
+let g:NERDTreeWinSize=100
+
+ "NerdTree show line numbers
 let NERDTreeShowLineNumbers=1
 
-"NerdTree git statuses icons
+ "NerdTree git statuses icons
 let g:NERDTreeGitStatusUseNerdFonts = 1
 let g:NERDTreeGitStatusIndicatorMapCustom = {
                 \ 'Modified'  :'🦄',
@@ -165,16 +189,24 @@ let g:fzf_colors =
 
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
+"let g:VimTodoListsUndoneItem = '- []'
+"let g:VimTodoListsDoneItem = '- [V]'
+\
 " Ack config
 cnoreabbrev Ack Ack!
-nnoremap <Leader>a :vsp<CR> :Ack!<Space>
+
+"nmap <silent> <leader>f :Ack!<CR>
+"nnoremap <Leader>a :vsp<CR> :Ack!<Space>
 
 " Tab navigation
+noremap <Tab> :tabnext<CR>
+noremap <S-Tab> :tabprevious<CR>
+
 nnoremap tn :tabnew<CR>
-nnoremap tk :tabfirst<CR>
-nnoremap tl :tabnext<CR>
-nnoremap th :tabprev<CR>
-nnoremap tj :tablast<CR>
+"nnoremap tk :tabfirst<CR>
+"nnoremap <leader>d :tabnext<CR>
+"nnoremap <leader>a :tabprev<CR>
+"nnoremap tj :tablast<CR>
 noremap <leader>1 1gt
 noremap <leader>2 2gt
 noremap <leader>3 3gt
@@ -185,6 +217,72 @@ noremap <leader>7 7gt
 noremap <leader>8 8gt
 noremap <leader>9 9gt
 noremap <leader>0 :tablast<cr>
+
+" Move to previous/next
+nnoremap <silent>    <leader>a <Cmd>BufferPrevious<CR>
+nnoremap <silent>    <leader>d <Cmd>BufferNext<CR>
+
+" Re-order to previous/next
+nnoremap <silent>    <A-<> <Cmd>BufferMovePrevious<CR>
+nnoremap <silent>    <A->> <Cmd>BufferMoveNext<CR>
+
+" Goto buffer in position...
+nnoremap <silent>    <A-1> <Cmd>BufferGoto 1<CR>
+nnoremap <silent>    <A-2> <Cmd>BufferGoto 2<CR>
+nnoremap <silent>    <A-3> <Cmd>BufferGoto 3<CR>
+nnoremap <silent>    <A-4> <Cmd>BufferGoto 4<CR>
+nnoremap <silent>    <A-5> <Cmd>BufferGoto 5<CR>
+nnoremap <silent>    <A-6> <Cmd>BufferGoto 6<CR>
+nnoremap <silent>    <A-7> <Cmd>BufferGoto 7<CR>
+nnoremap <silent>    <A-8> <Cmd>BufferGoto 8<CR>
+nnoremap <silent>    <A-9> <Cmd>BufferGoto 9<CR>
+nnoremap <silent>    <A-0> <Cmd>BufferLast<CR>
+
+" Pin/unpin buffer
+nnoremap <silent>    <A-p> <Cmd>BufferPin<CR>
+
+" Close buffer
+nnoremap <silent>    <A-c> <Cmd>BufferClose<CR>
+
+" Wipeout buffer
+"                          :BufferWipeout
+" Close commands
+"                          :BufferCloseAllButCurrent
+"                          :BufferCloseAllButVisible
+"                          :BufferCloseAllButPinned
+"                          :BufferCloseAllButCurrentOrPinned
+"                          :BufferCloseBuffersLeft
+"                          :BufferCloseBuffersRight
+
+" Magic buffer-picking mode
+nnoremap <silent> <C-p>    <Cmd>BufferPick<CR>
+nnoremap <silent> <C-p>    <Cmd>BufferPickDelete<CR>
+
+" Sort automatically by...
+nnoremap <silent> <Space>bb <Cmd>BufferOrderByBufferNumber<CR>
+nnoremap <silent> <Space>bd <Cmd>BufferOrderByDirectory<CR>
+nnoremap <silent> <Space>bl <Cmd>BufferOrderByLanguage<CR>
+nnoremap <silent> <Space>bw <Cmd>BufferOrderByWindowNumber<CR>
+
+" Other:
+" :BarbarEnable - enables barbar (enabled by default)
+" :BarbarDisable - very bad command, should never be used
+
+" Close Barbar tab plugin with :q
+"function! CloseBarbarWithQ()
+    "" If there are more tabs, switch to the next one
+    "silent! BufferClose
+  "" Close the current tab
+  "silent! :q
+"endfunction
+
+""" Map :q to close Barbar tab plugin
+""nnoremap <silent> <leader>q :call CloseBarbarWithQ()<CR>
+"cnoremap q :call CloseBarbarWithQ()<CR>
+
+let g:vem_tabline_show_icon = 1
+
+nnoremap term :vsp term://zsh<CR>
 
 " Copy clipboard commands
 vmap <C-x> :!pbcopy<CR>
@@ -208,11 +306,11 @@ endif
 
 set autoindent
 set smartindent
-set smarttab
+"set smarttab
 set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-set expandtab
+"set softtabstop=2
+"set tabstop=2
+"set expandtab
 
 " ================ Search ===========================
 
@@ -263,6 +361,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'sheerun/vim-polyglot'
   Plug 'tpope/vim-fugitive'
 
+  Plug 'ap/vim-css-color'
+
   Plug 'tpope/vim-surround'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -275,6 +375,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
   Plug 'etdev/vim-hexcolor'
 
+  "Plug 'blueyed/vim-diminactive'
+  Plug 'tpope/vim-dadbod'
+  Plug 'kristijanhusak/vim-dadbod-ui'
+
+  Plug 'aserebryakov/vim-todo-lists'
+  Plug 'tomswartz07/vim-todo'
+
+  Plug 'CoderCookE/vim-chatgpt'
+
   Plug 'fabi1cazenave/termopen.vim'
 
   Plug 'kassio/neoterm'
@@ -284,7 +393,19 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'severin-lemaignan/vim-minimap'
 
-  Plug 'itchyny/lightline.vim'
+  Plug 'mhinz/vim-startify'
+
+  Plug 'nvim-tree/nvim-web-devicons'
+  "Plug 'romgrk/barbar.nvim'
+  Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
+
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+
+  Plug 'qpkorr/vim-bufkill'
+  "Plug 'pacha/vem-tabline'
+
+  "Plug 'itchyny/lightline.vim'
 
   " Code speel
   Plug 'iamcco/coc-spell-checker'
@@ -292,7 +413,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'terryma/vim-multiple-cursors'
 
   " AI
-  Plug 'github/copilot.vim'
+  "Plug 'github/copilot.vim'
 
   " Code scopes
   Plug 'wordijp/vim-vimscript-scope-syntax'
@@ -341,6 +462,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'neomake/neomake' " Execute code checks to find mistakes in the currently edited file
   Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
+  Plug 'mhanberg/elixir.nvim'
+
   " NerdTree fonts
   Plug 'ryanoasis/vim-devicons'
 
@@ -352,19 +475,78 @@ call plug#begin('~/.vim/plugged')
   Plug 'ayu-theme/ayu-vim'
 call plug#end()
 
+"let g:airline_statusline_ontop=1
+"let g:airline#extensions#tabline#enabled = 1
+
+
+let g:chat_gpt_max_tokens=2000
+let g:chat_gpt_model='gpt-3.5-turbo'
+let g:chat_gpt_session_mode=1
+let g:chat_gpt_temperature = 0.7
+let g:chat_gpt_lang = 'English'
+
 " Lightline color schema
 let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ }
 
+let g:dbs = {
+\  'trader': 'postgresql://postgres@localhost/trader_dev'
+\ }
+
+let g:db_ui_table_helpers = {
+\   'postgresql': {
+\     'Count': 'select count(*) from "{table}"'
+\   }
+\ }
+
+let g:db_ui_table_helpers = {
+\   'postgresql': {
+\     'List': 'select * from "{table}" order by id asc'
+\   }
+\ }
+
+let g:db_ui_auto_execute_table_helpers = 1
+
+
 " Nerd Commenter jsx files
 let g:NERDCustomDelimiters={
 	\ 'javascript': { 'left': '//', 'right': '', 'leftAlt': '{/*', 'rightAlt': '*/}' },
 \}
+"hi StartifyHeader  ctermfg=114
+let g:startify_custom_header = [
+  \'                   .mmMMMMMMMMMMMMMmm.                   João Antonio Maruti Milagres                  ',
+  \'               .mMMMMMMMMMMMMMMMMMMMMMMMm.               ----------------------------------------------',
+  \'            .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm.            GitHub: https://github.com/joaoantoniomaruti  ',
+  \'          .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.          Linkedin: https://linkedin.com/in/joaomilagres',
+  \'        .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.        Email: joaoantoniomaruti@gmail.com            ',
+  \'       MMMMMMMM:  ``MMMMM````````MMMM``` :MMMMMMMM       Twitch: https://twitch.tv/joaoantoniomaruti   ',
+  \'      MMMMMMMMM                           MMMMMMMMM                                                    ',
+  \'     MMMMMMMMMM:                         :MMMMMMMMMM     Hard Skills                                   ',
+  \'    .MMMMMMMMMM                           MMMMMMMMMM.    - Elixir                                      ',
+  \'    MMMMMMMMM"                             "MMMMMMMMM    - Phoenix Framework                           ',
+  \'    MMMMMMMMM                               MMMMMMMMM    - Javascript and TypeScript                   ',
+  \'    MMMMMMMMM                               MMMMMMMMM    - React                                       ',
+  \'    MMMMMMMMMM                             MMMMMMMMMM    - GraphQL                                     ',
+  \'    `MMMMMMMMMM                           MMMMMMMMMM`                                                  ',
+  \'     MMMMMMMMMMMM.                     .MMMMMMMMMMMM                                                   ',
+  \'      MMMMMM  MMMMMMMMMM         MMMMMMMMMMMMMMMMMM                                                    ',
+  \'       MMMMMM   MMMMMMM           MMMMMMMMMMMMMMMM                                                     ',
+  \'        `MMMMMM  "MMMMM           MMMMMMMMMMMMMM`                                                      ',
+  \'          `MMMMMm                 MMMMMMMMMMMM`                                                        ',
+  \'            `"MMMMMMMMM           MMMMMMMMM"`                                                          ',
+  \'               `"MMMMMM           MMMMMM"`                                                             ',
+  \'                   `""M           M""`                   Website: https://joaoantoniomaruti.com.br     ',
+\]
 
+"g:lightline#bufferline#enable_devicons
+
+"autocmd VimEnter, Colorscheme * :hi StartifyHeader ctermfg=91 ctermbg=1
 
 " Rainbow tabs
 "let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_start_level = 2
+"let g:indent_guides_guide_size = 1
 "let g:indent_guides_auto_colors = 0
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#170428   ctermbg=3
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=#200a34 ctermbg=4
@@ -385,11 +567,15 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
+
 " Prettier
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+nmap <leader>db :DBUIToggle<CR>
 
 " Javascript
 let g:hybrid_custom_term_colors = 0
@@ -402,15 +588,72 @@ nnoremap <C-p> :GFiles<CR>
 nnoremap <Leader>b :Buffers<CR>
 nnoremap <Leader>h :History<CR>
 
-let test#strategy = "neovim"
-let g:test#neovim#term_position = 'vert'
+"FZF Buffer Delete
 
+function! s:list_buffers()
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
+endfunction
+
+function! s:delete_buffers(lines)
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+endfunction
+
+command! BD call fzf#run(fzf#wrap({
+  \ 'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+\ }))
+
+
+if has('nvim')
+  tmap <C-o> <C-\> <C-n>
+endif
+
+let test#strategy = "neovim"
+"let test#ruby#rspec#executable = 'bundle exec rspec'
+"let test#ruby#rspec#options = '--format documentation'
+let g:test#neovim#term_position = 'vert'
+let g:test#neovim#start_normal = 1
 " vim-tests bindings
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
+"nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
+
+nmap <silent> <leader>sp :vsp<CR>
+nmap <silent> <leader>vs :vsp<CR>
+nmap <silent> <leader>q :q<CR>
+nmap <silent> <leader>wq :wq<CR>
+nmap <silent> <leader>w :w<CR>
+nmap <silent> <leader>ct :bd<CR>
+nmap <silent> <leader>sp :sp<CR>
+nmap <silent> <leader>vsp :vsp<CR>
+
+" neovim config
+  " change cursor to bar in insert mode
+
+  " disable mouse support, what am I a vimposer?
+
+  " run tests with :T
+  " pretty much essential: by default in terminal mode, you have to press ctrl-\-n to get into normal mode
+  " ain't nobody got time for that
+  "tnoremap <Esc> <C-\><C-n>
+
+  "tnoremap <A-h> <C-\><C-n><C-w>h
+  "tnoremap <A-j> <C-\><C-n><C-w>j
+  "tnoremap <A-k> <C-\><C-n><C-w>k
+  "tnoremap <A-l> <C-\><C-n><C-w>l
+
+  "nnoremap <A-h> <C-w>h
+  "nnoremap <A-j> <C-w>j
+  "nnoremap <A-k> <C-w>k
+  "nnoremap <A-l> <C-w>l
+
+
 
 " fugitive git bindings
 nnoremap <space>gb :Gblame<CR><CR>
@@ -461,8 +704,9 @@ let g:coc_global_extensions = [ 'coc-tsserver' ]
 inoremap <silent><expr> <Tab> coc#refresh()
 
 set termguicolors     " enable true colors support
+
 let ayucolor="mirage" " for mirage version of theme
-colorscheme ayu
+silent! colorscheme ayu
 "colorscheme dracula
 "colorscheme nightfly
 hi Normal guibg=NONE ctermbg=NONE
@@ -473,31 +717,28 @@ set noerrorbells visualbell t_vb=
 "let g:blamer_delay = 500
 "highlight Blamer guifg=#000000
 
-" Async, await
+
+"autocmd Colorscheme * hi Keyword gui=italic cterm=italic
+"autocmd Colorscheme * hi Repeat gui=italic cterm=italic
+"autocmd Colorscheme * hi Special gui=italic cterm=italic
+"autocmd Colorscheme * hi Boolean gui=italic cterm=italic
+"autocmd Colorscheme * hi StorageClass gui=italic cterm=italic
+
+
+ "Async, await
 "highlight Keyword cterm=italic ctermfg=120
 
-" Loops
+ ""Loops
 "highlight Repeat cterm=italic
 
-" Import, export
+ ""Import, export
 "highlight Special cterm=italic
 
-" True, false
+ ""True, false
 "highlight Boolean cterm=italic ctermfg=201
 
-" let, var, const
+ ""let, var, const
 "highlight StorageClass cterm=italic ctermfg=120
-
-
-"highlight CursorColumn
-"cterm=underline
-"term=underline ctermbg=236 guibg=Grey40
-
-"highlight CursorLine cterm=underline
-"hi CursorLine cterm=NONE ctermbg=242
-
-"highlight CursorLine   cterm=underline ctermbg=darkred ctermfg=white guibg=darkred guifg=white
-"highlight CursorColumn cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
 
 " Vim Flutter Configurations
 let g:lsc_auto_map = v:true
