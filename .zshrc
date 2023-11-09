@@ -24,5 +24,3 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 export PATH=/opt/homebrew/bin:/Users/joaoantoniomarut/.nvm/versions/node/v14.19.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/usr/local/bin
 
-export PNPM_HOME="/Users/joaoantoniomarut/Library/pnpm"
-export PATH="$PNPM_HOME:$PATH"
