@@ -1,83 +1,47 @@
-# João's dotfiles 👨‍💻
+# João's Environment Settings 👨‍💻
 
-## Screenshots
+This repository contains the configurations dotfiles and my NeoVim environment with Lua, optimized for development. Below are some of the key features and shortcuts that I use.
 
 ![Screenshot](images/screenshot.png)
 
-## install
+## Mapleader
+- `,` is configured as the mapleader.
 
-## Hacks
+## Navigation
+- `<C-j>`, `<C-k>`, `<C-h>`, `<C-l>`: Navigation between splits.
+- `<leader><space>`: Clears the search highlight.
 
-#### Open NerdTree
+## Vim-Plug Plugins
+- **coc.nvim**: Autocompletions and language integration (supports various languages including JavaScript, TypeScript, Python, Ruby, and more).
+- **fzf.vim**: FZF integration for efficient file search.
+- **vim-airline**: Elegant status bar.
+- **nerdtree**: File navigation in tree style.
 
-`Ctrl + a`
+## Git
+- `:Gblame`, `:Gedit`, `:Gdiff`, `:Gstatus`: Fugitive commands for Git operations.
+- `<Leader>s`: Shows Git blame for the current line.
 
-![Open NerdTree](images/open-nerdtree.gif)
+## Testing
+- `<leader>t`: Runs the nearest test.
+- `<leader>T`: Runs all tests in the file.
+- `<leader>l`: Runs the last test.
 
-#### Open File
+## Formatting and Code Style
+- `<leader>f`: Formats the selected code with the Coc plugin.
+- `<leader>mf`: Runs MixFormat in the Elixir environment.
+- `<leader>df`: Dart code formatting.
 
-`Ctrl + p`
+## Other Useful Shortcuts
+- `<C-t>`: Toggles the quickfix window.
+- `<leader>b`: Switches between buffers.
+- `<C-p>`: Searches files using FZF.
+- `<leader>q"`: Replaces the word under the cursor with double quotes.
+- `<leader>q'`: Replaces the word under the cursor with single quotes.
+- `<leader>qd`: Deletes the word under the cursor, considering escapes.
 
-![Open File](images/open-file.gif)
+## Contributions
+Feel free to contribute or suggest improvements to my Vim environment. Contributions are welcome!
 
-#### Split panels navigation
+## Author
+João Antonio Maruti Milagres
 
-`ctrl + [h, j, k, l]` (like a vim navigation)
-
-![Panel navigate](images/tabnavigation.gif)
-
-#### NerdComments
-
-`<leader> + space + c`
-![Comment](images/comment.gif)
-
-#### Run prettier
-
-`<leader> + p`
-
-![Prettier](images/prettier.gif)
-
-#### Go definition with COC
-
-`gd`
-
-![Go definition](images/gd.gif)
-
-#### Split vertical panel and go definition
-
-`gv`
-
-![split new vertical panel and go definition](images/gssv.gif)
-
-##### Split panel and go definition
-
-`gs`
-
-![Split new panel and go definition](images/gdsp.gif)
-
-<!--![Screenshot](images/screenshot.png)-->
-
-<!--![Screenshot](images/screenshot.png)-->
-
-<!--![Screenshot](images/screenshot.png)-->
-
-<!--![Screenshot](images/screenshot.png)-->
-
-<!--![Screenshot](images/screenshot.png)-->
-
-## Features
-
-- TypeScript support
-- Vim Plug
-- React
-- styled-components
-- Elixir
-- GraphQL
-- Code navigation
-- Font ligatures
-
-## Fonts
-
-Check your term support fonts ligatures
-
-[https://github.com/kencrocken/FiraCodeiScript](https://github.com/kencrocken/FiraCodeiScript)
