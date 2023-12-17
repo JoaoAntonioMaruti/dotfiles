@@ -1,5 +1,4 @@
 export ZSH="$HOME/.oh-my-zsh"
-export PATH=~/Developer/flutter/bin:$PATH
 
 ZSH_THEME="funky"
 

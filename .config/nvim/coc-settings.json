@@ -1,0 +1,6 @@
+{
+  "diagnostic.errorSign": "🚨",
+  "diagnostic.warningSign": "⚠️",
+  "diagnostic.infoSign": "ℹ️",
+  "elixir.pathToElixirLS": "~/.elixir-ls/release/language_server.sh"
+}
