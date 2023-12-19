@@ -92,10 +92,11 @@ if vim.fn.executable('rg') then
 end
 
 -- NERDTree
-vim.api.nvim_set_keymap('n', '<C-a>', [[:call NERDTreeToggleInCurDir()<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-a>', ':lua NERDTreeToggleInCurDir()<CR>', { noremap = true, silent = true })
 
 function NERDTreeToggleInCurDir()
-  if vim.fn.exists("t:NERDTreeBufName") and vim.fn.bufwinnr(vim.fn["t:NERDTreeBufName"]) ~= -1 then
+  local nerdtree_buf_name = vim.fn["t:NERDTreeBufName"]
+  if nerdtree_buf_name and vim.fn.bufwinnr(nerdtree_buf_name) ~= -1 then
     vim.cmd(":NERDTreeFocus")
   else
     if vim.fn.expand("%") == "" then
@@ -257,10 +258,10 @@ vim.g.coc_global_extensions = { 'coc-tsserver' }
 
 vim.o.termguicolors = true
 
-vim.cmd("let ayucolor='mirage'")
-vim.cmd("silent! colorscheme ayu")
-vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
-vim.cmd("set noerrorbells visualbell t_vb=")
+--vim.cmd("let ayucolor='mirage'")
+--vim.cmd("silent! colorscheme ayu")
+--vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
+--vim.cmd("set noerrorbells visualbell t_vb=")
 
 vim.g.lsc_auto_map = true
 

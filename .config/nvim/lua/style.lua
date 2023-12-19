@@ -1,9 +1,3 @@
-require("config")
-require("keymap")
-require("plugins")
-require("style")
-
-
 local blend = require('rose-pine.util').blend
 
 local M = {}
