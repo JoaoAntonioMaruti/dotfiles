@@ -1,6 +1,8 @@
 vim.api.nvim_set_keymap('', ',', '', { noremap = true, silent = true })
 vim.g.mapleader = ','
 
+vim.api.nvim_set_keymap('i', '<CR>', 'pumvisible() ? "\\<C-y>" : "\\<CR>"', { expr = true, noremap = true, silent = true })
+
 -- Copy and paste clipboard
 vim.api.nvim_set_keymap('n', '<C-y>', '"+y', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-y>', '"+y', { noremap = true, silent = true })
@@ -137,8 +139,8 @@ vim.api.nvim_set_keymap('n', '<Leader>b', ':e#<CR>', { noremap = true, silent = 
 
 -- GoTo code navigation
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
-vim.api.nvim_set_keymap('n', 'gs', ':sp<CR><Plug>(coc-definition)', { silent = true })
-vim.api.nvim_set_keymap('n', 'gv', ':vsp<CR><Plug>(coc-definition)', { silent = true })
+vim.api.nvim_set_keymap('n', 'gs', ':sp<CR>:wincmd r<CR><Plug>(coc-definition)', { silent = true })
+vim.api.nvim_set_keymap('n', 'gv', ':vsp<CR>:wincmd r<CR><Plug>(coc-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gy', '<Plug>(coc-type-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gr', '<Plug>(coc-references)', { silent = true })

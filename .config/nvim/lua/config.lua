@@ -1,15 +1,3 @@
--- Treesitter Config
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "dart", "javascript", "bash", "elixir", "lua", "vim" },
-
-  sync_install = false,
-
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-}
-
 -- Use 'nocompatible' for Vim to work in a more modern way
 vim.cmd('set nocompatible')
 
@@ -54,9 +42,6 @@ vim.cmd('set linespace=10')
 -- Allow backspace to work in insert mode as expected
 vim.cmd('set backspace=indent,eol,start')
 
--- Set 'scriptencoding' to UTF-8
-vim.cmd('scriptencoding utf-8')
-
 -- Set 'encoding' to UTF-8
 vim.cmd('set encoding=utf-8')
 
@@ -66,48 +51,9 @@ vim.cmd('set clipboard=unnamed')
 -- Disable modeline (security risk)
 vim.cmd('set nomodeline')
 
--- Check if 'rg' is executable
-if vim.fn.executable('rg') then
-  -- Set FZF default command
-  vim.env.FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-
-  -- Set grepprg to use rg
-  vim.api.nvim_set_option('grepprg', 'rg --vimgrep')
-
-  -- Define custom Find command using FZF and rg
-  vim.cmd([[
-    command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always " '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-  ]])
-
-  -- Define custom Rg command using FZF and rg
-  vim.cmd([[
-    command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case " .. (<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-  ]])
-
-  -- Map Rg search with the current word
-  vim.api.nvim_set_keymap('n', '<leader>fw', [[:Rg <C-R><C-W><space> <CR>]], { noremap = true, silent = true })
-
-  -- Map Rg search
-  vim.api.nvim_set_keymap('n', '\\', [[:Rg <C-R><space>]], { noremap = true, silent = true })
-end
-
 -- NERDTree
-vim.api.nvim_set_keymap('n', '<C-a>', ':lua NERDTreeToggleInCurDir()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-a>', ':NERDTreeToggle<CR>', { noremap = true, silent = true })
 
-function NERDTreeToggleInCurDir()
-  local nerdtree_buf_name = vim.fn["t:NERDTreeBufName"]
-  if nerdtree_buf_name and vim.fn.bufwinnr(nerdtree_buf_name) ~= -1 then
-    vim.cmd(":NERDTreeFocus")
-  else
-    if vim.fn.expand("%") == "" then
-      vim.cmd(":NERDTreeToggle")
-    else
-      vim.cmd(":NERDTreeFind")
-    end
-  end
-end
-
--- Multi-cursor quit key
 vim.g.multi_cursor_quit_key = '<C-m>'
 
 -- NERDTree configurations
@@ -132,15 +78,36 @@ vim.g.NERDTreeGitStatusIndicatorMapCustom = {
   Unknown   = '❓',
 }
 
--- Persistent Undo
-if vim.fn.has('persistent_undo') == 1 then
-  -- Ensure the directory exists (equivalent to mkdir -p)
-  vim.fn.system('mkdir -p ~/.vim/backups > /dev/null 2>&1')
+-- Startify Header
+vim.g.startify_custom_header = {
+    '                   .mmMMMMMMMMMMMMMmm.                   João Antonio Maruti Milagres                  ',
+    '               .mMMMMMMMMMMMMMMMMMMMMMMMm.               ----------------------------------------------',
+    '            .mMMMMMMMMMMMMMMMMMMMMMMMMMMMMMm.            GitHub: https://github.com/joaoantoniomaruti  ',
+    '          .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.          Linkedin: https://linkedin.com/in/joaomilagres',
+    '        .MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.        Email: joaoantoniomaruti@gmail.com            ',
+    '       MMMMMMMM:  ``MMMMM````````MMMM``` :MMMMMMMM       Twitch: https://twitch.tv/joaoantoniomaruti   ',
+    '      MMMMMMMMM                           MMMMMMMMM                                                    ',
+    '     MMMMMMMMMM:                         :MMMMMMMMMM     Hard Skills                                   ',
+    '    .MMMMMMMMMM                           MMMMMMMMMM.    - Elixir                                      ',
+    '    MMMMMMMMM"                             "MMMMMMMMM    - Phoenix Framework                           ',
+    '    MMMMMMMMM                               MMMMMMMMM    - Javascript and TypeScript                   ',
+    '    MMMMMMMMM                               MMMMMMMMM    - React                                       ',
+    '    MMMMMMMMMM                             MMMMMMMMMM    - GraphQL                                     ',
+    '    `MMMMMMMMMM                           MMMMMMMMMM`                                                  ',
+    '     MMMMMMMMMMMM.                     .MMMMMMMMMMMM                                                   ',
+    '      MMMMMM  MMMMMMMMMM         MMMMMMMMMMMMMMMMMM                                                    ',
+    '       MMMMMM   MMMMMMM           MMMMMMMMMMMMMMMM                                                     ',
+    '        `MMMMMM  "MMMMM           MMMMMMMMMMMMMM`                                                      ',
+    '          `MMMMMm                 MMMMMMMMMMMM`                                                        ',
+    '            `"MMMMMMMMM           MMMMMMMMM"`                                                          ',
+    '               `"MMMMMM           MMMMMM"`                                                             ',
+    '                   `""M           M""`                   Website: https://joaoantoniomaruti.com.br     ',
+}
 
-  -- Set undodir and enable undofile
-  vim.o.undodir = '~/.vim/backups'
-  vim.o.undofile = true
-end
+vim.cmd([[
+  set undodir=~/.vim/tmp
+  set undofile
+]])
 
 -- Turn Off Swap Files
 vim.o.swapfile = false
@@ -174,23 +141,6 @@ vim.o.shortmess = 'atI'
 -- Show the current mode
 vim.o.title = true
 
--- FZF layout and colors
-vim.g.fzf_layout = { down = '40%' }
-vim.g.fzf_colors = {
-  fg = { 'fg', 'Normal' },
-  bg = { 'bg', 'Normal' },
-  hl = { 'fg', 'Comment' },
-  fgplus = { 'fg', 'CursorLine', 'CursorColumn', 'Normal' },
-  bgplus = { 'bg', 'CursorLine', 'CursorColumn' },
-  hlplus = { 'fg', 'Statement' },
-  info = { 'fg', 'PreProc' },
-  prompt = { 'fg', 'Conditional' },
-  pointer = { 'fg', 'Exception' },
-  marker = { 'fg', 'Keyword' },
-  spinner = { 'fg', 'Label' },
-  header = { 'fg', 'Comment' },
-}
-
 -- Autoindent and smartindent settings
 vim.o.autoindent = true
 vim.o.smartindent = true
@@ -210,31 +160,7 @@ vim.o.wrap = false
 -- Wrap lines at convenient points
 vim.o.linebreak = true
 
--- Configure persistent undo
-if vim.fn.has('persistent_undo') == 1 then
-  vim.fn.system('mkdir -p ~/.vim/backups > /dev/null 2>&1')
-  vim.o.undodir = '~/.vim/backups'
-  vim.o.undofile = true
-end
-
--- FZF Buffer Delete
-function s:list_buffers()
-  return vim.fn.split(vim.fn.execute('ls'), "\n")
-end
-
-function s:delete_buffers(lines)
-  vim.fn.execute('bwipeout ' .. table.concat(vim.fn.map(lines, 'split(v:val)[0]'), ' '))
-end
-
 vim.cmd("command! BD call fzf#run(fzf#wrap({ 'source': function('s:list_buffers'), 'sink*': function('s:delete_buffers'), 'options': '--multi --reverse --bind ctrl-a:select-all+accept' }))")
-
-if vim.fn.has('nvim') == 1 then
-  vim.api.nvim_set_keymap('t', '<C-o>', '<C-\\><C-n>', {})
-end
-
-vim.g.test_strategy = "neovim"
-vim.g.test_neovim_term_position = 'vert'
-vim.g.test_neovim_start_normal = 1
 
 vim.g.user_emmet_leader_key = '<C-Z>'
 
@@ -243,7 +169,7 @@ vim.o.pastetoggle = '<F3>'
 
 -- VM
 vim.g.VM_mouse_mappings = 1
-vim.g.VM_theme = 'iceblue'
+--vim.g.VM_theme = 'iceblue'
 vim.g.VM_highlight_matches = 'underline'
 
 vim.g.VM_maps = {}
@@ -264,4 +190,3 @@ vim.o.termguicolors = true
 --vim.cmd("set noerrorbells visualbell t_vb=")
 
 vim.g.lsc_auto_map = true
-
