@@ -8,8 +8,7 @@ return require('packer').startup(function(use)
       run = ':TSUpdate'
   }
 
-
- -- Packer itself
+  -- Packer itself
   use 'wbthomason/packer.nvim'
 
   -- Themes

@@ -184,9 +184,4 @@ vim.g.coc_global_extensions = { 'coc-tsserver' }
 
 vim.o.termguicolors = true
 
---vim.cmd("let ayucolor='mirage'")
---vim.cmd("silent! colorscheme ayu")
---vim.cmd("hi Normal guibg=NONE ctermbg=NONE")
---vim.cmd("set noerrorbells visualbell t_vb=")
-
 vim.g.lsc_auto_map = true
