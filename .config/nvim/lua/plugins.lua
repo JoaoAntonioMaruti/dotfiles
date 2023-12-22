@@ -8,7 +8,17 @@ return require('packer').startup(function(use)
       run = ':TSUpdate'
   }
 
-  -- Packer itself
+  -- plugins/telescope.lua:
+  use "nvim-lua/plenary.nvim"
+  use {
+    'nvim-telescope/telescope.nvim', tag = '0.1.5',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+  }
+
+  -- Tab styles
+  use 'romgrk/barbar.nvim'
+
+ -- Packer itself
   use 'wbthomason/packer.nvim'
 
   -- Themes
@@ -19,6 +29,7 @@ return require('packer').startup(function(use)
       'airblade/vim-gitgutter',
       requires = 'Xuyuanp/nerdtree-git-plugin'
   }
+  use "sindrets/diffview.nvim"
 
   -- UI
   use 'akinsho/bufferline.nvim'
@@ -74,7 +85,6 @@ return require('packer').startup(function(use)
   use 'junegunn/fzf.vim'
   use 'scrooloose/nerdcommenter'
   use 'tpope/vim-eunuch'
-  --use 'mg979/vim-visual-multi'
   use 'vim-test/vim-test'
   use 'styled-components/vim-styled-components'
   use 'etdev/vim-hexcolor'

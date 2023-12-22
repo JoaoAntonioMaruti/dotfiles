@@ -54,9 +54,12 @@ vim.api.nvim_exec([[
     autocmd BufWritePre * %s/\s\+$//e
 ]], false)
 
-
 -- Ack config
 vim.cmd("cnoreabbrev Ack Ack!")
+vim.cmd("cnoreabbrev ack Ack!")
+
+-- Git
+vim.cmd("cnoreabbrev git Git")
 
 -- Tab navigation
 vim.api.nvim_set_keymap('n', '<Tab>', ':tabnext<CR>', { noremap = true, silent = true })
@@ -139,13 +142,11 @@ vim.api.nvim_set_keymap('n', '<Leader>b', ':e#<CR>', { noremap = true, silent = 
 
 -- GoTo code navigation
 vim.api.nvim_set_keymap('n', 'gd', '<Plug>(coc-definition)', { silent = true })
-vim.api.nvim_set_keymap('n', 'gs', ':sp<CR>:wincmd r<CR><Plug>(coc-definition)', { silent = true })
-vim.api.nvim_set_keymap('n', 'gv', ':vsp<CR>:wincmd r<CR><Plug>(coc-definition)', { silent = true })
+vim.api.nvim_set_keymap('n', 'gs', ':sp<CR><Plug>(coc-definition)', { silent = true })
+vim.api.nvim_set_keymap('n', 'gv', ':vsp<CR><Plug>(coc-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gy', '<Plug>(coc-type-definition)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gi', '<Plug>(coc-implementation)', { silent = true })
 vim.api.nvim_set_keymap('n', 'gr', '<Plug>(coc-references)', { silent = true })
-
---vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : "\<CR>"', { expr = true, noremap = true, silent = true })
 
 -- Coc Format Selected
 vim.api.nvim_set_keymap('v', '<leader>f', '<Plug>(coc-format-selected)', { noremap = true, silent = true })
@@ -154,27 +155,26 @@ vim.api.nvim_set_keymap('n', '<leader>f', '<Plug>(coc-format-selected)', { norem
 -- Dibu Toggle
 vim.api.nvim_set_keymap('n', '<leader>db', ':DBUIToggle<CR>', { noremap = true, silent = true })
 
--- FZF Mappings
-vim.api.nvim_set_keymap('n', '<C-p>', ':GFiles<CR>', { noremap = true, silent = true })
+-- Telescope Mappings
+vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>b', ':Buffers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>h', ':History<CR>', { noremap = true, silent = true })
 
+-- Elixir bindings
+vim.api.nvim_set_keymap('n', 'pipe', ':ElixirDev pipelize<CR>', { silent = true })
 
 -- Vim Tests bindings
 vim.api.nvim_set_keymap('n', '<leader>t', ':TestNearest<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>T', ':TestFile<CR>', { silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>a', ':TestSuite<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>l', ':TestLast<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>g', ':TestVisit<CR>', { silent = true })
 
-vim.api.nvim_set_keymap('n', '<leader>sp', ':vsp<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>vs', ':vsp<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>q', ':q<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>wq', ':wq<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>ct', ':bd<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>sp', ':sp<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>vsp', ':vsp<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>sp', ':sp<CR><C-j><CR> :Startify<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', '<leader>vs', ':vsp<CR><C-l><CR> :Startify<CR>', { silent = true })
 
 -- Fugitive Git bindings
 vim.api.nvim_set_keymap('n', '<space>gb', ':Gblame<CR><CR>', { silent = true })
@@ -187,13 +187,6 @@ vim.api.nvim_set_keymap('n', '<space>ga', ':Git add %:p<CR><CR>', { silent = tru
 vim.api.nvim_set_keymap('n', '<space>gr', ':Gread<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<space>gw', ':Gwrite<CR><CR>', { silent = true })
 vim.api.nvim_set_keymap('n', '<space>go', ':Git checkout<Space>', { silent = true })
-
--- Vim Test Configurations
-vim.api.nvim_set_keymap('n', '<leader>tn', ':TestNearest<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tf', ':TestFile<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ts', ':TestSuite<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tl', ':TestLast<CR>', { silent = true })
-vim.api.nvim_set_keymap('n', '<leader>tv', ':TestVisit<CR>', { silent = true })
 
 vim.api.nvim_set_keymap('n', '<leader>mf', ':MixFormat<cr>', { silent = true })
 vim.api.nvim_set_keymap('n', '<leader>mfv', ':verb MixFormat<cr>', { silent = true })
@@ -215,3 +208,4 @@ vim.api.nvim_set_keymap('n', '<Leader>q\'', 'ciw\'\'<Esc>P', { silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>qd', 'daW"=substitute(@@,"\'\\\\\\|\\"","","g")<CR>P', { silent = true })
 
 vim.api.nvim_set_keymap('n', '<Leader>s', ':<C-u>call gitblame#echo()<CR>', { silent = true })
+
