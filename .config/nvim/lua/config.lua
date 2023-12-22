@@ -24,6 +24,8 @@ vim.cmd('set showmode')
 vim.cmd('set cursorline')
 vim.cmd('set cursorcolumn')
 
+vim.o.splitright = true
+
 -- Visual bell instead of sounds
 vim.cmd('set visualbell')
 

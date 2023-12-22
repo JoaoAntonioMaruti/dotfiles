@@ -1,18 +1,17 @@
 local g = vim.g
 local v = vim.v
 
-g.VimuxOrientation = "h"
-g.VimuxHeight = "30"
-
-g["test#preserve_screen"] = true
+g["test#preserve_screen"] = false
 g.neomake_open_list = true
 g['test#strategy'] = {
   nearest = 'neovim'
 }
 g['test#neovim#term_position'] = 'vert botright'
+g["test#neovim#start_normal"] = 1
 g.neomake_warning_sign = {
   text = '∙'
 }
+
 g.neomake_error_sign = {
   text = '∙'
 }
@@ -35,8 +34,6 @@ M.neomake_on_job_ended = function ()
     M.TESTING_STATUS = 'failing'
   end
 end
-
-local neomake_hooks = vim.api.nvim_create_augroup("MyNeomakeHooks", { clear = true })
 
 vim.api.nvim_create_autocmd("User", { pattern = "NeomakeJobStarted", callback = M.neomake_on_job_started, group = neomake_hooks })
 vim.api.nvim_create_autocmd("User", { pattern = "NeomakeJobFinished", callback = M.neomake_on_job_ended, group = neomake_hooks })
